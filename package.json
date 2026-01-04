@@ -1,15 +1,38 @@
 {
   "name": "schema-faker",
   "version": "0.1.0",
+  "description": "Generate fake data from Zod schemas in a deterministic way",
+  "license": "MIT",
+
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+
+  "files": ["dist"],
+
   "scripts": {
     "build": "tsc",
     "test": "vitest"
   },
+
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ramiyohay/schema-faker"
+  },
+
+  "keywords": [
+    "faker",
+    "schema",
+    "zod",
+    "mock",
+    "testing",
+    "seed",
+    "fake-data"
+  ],
+
   "dependencies": {
     "zod": "^3.23.0"
   },
+
   "devDependencies": {
     "vitest": "^4.0.16"
   }
