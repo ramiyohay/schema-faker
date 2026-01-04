@@ -26,6 +26,11 @@ Most fake data libraries generate random values field-by-field.
 ✅ array
 ✅ optional
 ✅ enum
+✅ nullable
+✅ tuple
+✅ union
+✅ literal
+
 
 ## Install
 npm install schema-faker zod
