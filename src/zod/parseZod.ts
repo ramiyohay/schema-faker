@@ -17,6 +17,7 @@ export function parseZodSchema(schema: any, ctx: Context): any {
       for (const key in shape) {
         obj[key] = parseZodSchema(shape[key], ctx);
       }
+      
       return obj;
     default:
       return null;

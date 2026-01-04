@@ -20,8 +20,9 @@ export class Random {
 
   string(length: number) {
     const chars = "abcdefghijklmnopqrstuvwxyz";
-    return Array.from({ length }, () =>
-      chars[this.int(0, chars.length - 1)]
+    return Array.from(
+      { length },
+      () => chars[this.int(0, chars.length - 1)]
     ).join("");
   }
 }
