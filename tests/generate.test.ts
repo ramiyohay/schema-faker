@@ -180,10 +180,44 @@ describe("schema-faker generate()", () => {
     it("generates tuple with correct item types", () => {
       const Schema = z.tuple([z.string(), z.number(), z.boolean()]);
       const result = generate(Schema);
-      
+
       expect(typeof result[0]).toBe("string");
       expect(typeof result[1]).toBe("number");
       expect(typeof result[2]).toBe("boolean");
+    });
+  });
+
+  describe("date support", () => {
+    it("generates a date within the specified range", () => {
+      const Schema = z
+        .date()
+        .min(new Date("2020-01-01"))
+        .max(new Date("2025-01-01"));
+      const result = generate(Schema);
+
+      expect(result).toBeInstanceOf(Date);
+      expect(result.getTime()).toBeGreaterThanOrEqual(
+        new Date("2020-01-01").getTime()
+      );
+      expect(result.getTime()).toBeLessThanOrEqual(
+        new Date("2025-01-01").getTime()
+      );
+    });
+
+    it("supports date with min only", () => {
+      const min = new Date("2020-01-01");
+      const Schema = z.date().min(min);
+      const result = generate(Schema);
+
+      expect(result.getTime()).toBeGreaterThanOrEqual(min.getTime());
+    });
+
+    it("supports date with max only", () => {
+      const max = new Date("2025-01-01");
+      const Schema = z.date().max(max);
+      const result = generate(Schema);
+
+      expect(result.getTime()).toBeLessThanOrEqual(max.getTime());
     });
   });
 });

@@ -30,6 +30,7 @@ Most fake data libraries generate random values field-by-field.
 ✅ tuple
 ✅ union
 ✅ literal
+✅ date
 
 
 ## Install
