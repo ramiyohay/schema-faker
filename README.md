@@ -18,6 +18,15 @@ Most fake data libraries generate random values field-by-field.
 - ✅ No dependency on Faker
 - ✅ Perfect for tests, seeds, and mock APIs
 
+### Type Support
+✅ string
+✅ number
+✅ boolean
+✅ object
+✅ array
+✅ optional
+✅ enum
+
 ## Install
 npm install schema-faker zod
 
