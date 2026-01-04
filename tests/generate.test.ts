@@ -13,7 +13,6 @@ describe("schema-faker generate()", () => {
   it("generates valid data according to schema", () => {
     const user = generate(UserSchema);
 
-    // בדיקה מול Zod עצמו
     expect(() => UserSchema.parse(user)).not.toThrow();
   });
 
@@ -38,9 +37,11 @@ describe("schema-faker generate()", () => {
     expect(a).not.toEqual(b);
   });
 
-  it("generates email-like strings", () => {
-    const user = generate(UserSchema);
+  it("generates valid email format", () => {
+  const user = generate(UserSchema);
+  const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    expect(user.email).toContain("@");
-  });
+  expect(user.email).toMatch(EMAIL_REGEX);
+});
+
 });
