@@ -80,3 +80,12 @@ const user = generate(UserSchema, {
 
 console.log(user);
 ```
+
+### Strict mode
+
+By default, unsupported Zod types are ignored.
+Enable strict mode to throw an error instead:
+
+```ts
+generate(schema, { strict: true });
+```
