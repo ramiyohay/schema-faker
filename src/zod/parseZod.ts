@@ -5,6 +5,7 @@ import { generateBoolean } from "../generators/boolean";
 import { generateArray } from "../generators/array";
 import { generateEnum } from "../generators/enum";
 import { generateDate } from "../generators/date";
+import { generateRecord } from "../generators/record";
 
 export function parseZodSchema(schema: any, ctx: Context): any {
   switch (schema._def.typeName) {
@@ -48,7 +49,10 @@ export function parseZodSchema(schema: any, ctx: Context): any {
 
       return parseZodSchema(options[index], ctx);
     }
-    case "ZodTuple": { // Tuple type , create array with fixed length and types
+    case "ZodRecord": // Record type
+      return generateRecord(schema, ctx);
+    case "ZodTuple": {
+      // Tuple type , create array with fixed length and types
       const items = schema._def.items;
 
       return items.map((itemSchema: any) => parseZodSchema(itemSchema, ctx));

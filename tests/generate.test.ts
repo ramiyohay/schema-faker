@@ -250,6 +250,20 @@ describe("schema-faker generate()", () => {
     });
   });
 
+  describe("record support", () => {
+    it("generates a record with valid keys and values", () => {
+      const Schema = z.record(z.string(), z.number());
+      const result = generate(Schema);
+
+      expect(typeof result).toBe("object");
+
+      for (const [key, value] of Object.entries(result)) {
+        expect(typeof key).toBe("string");
+        expect(typeof value).toBe("number");
+      }
+    });
+  });
+
   describe("optional support", () => {
     it("can return undefined or value with different seeds", () => {
       const Schema = z.string().optional();
