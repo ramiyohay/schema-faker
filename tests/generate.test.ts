@@ -64,8 +64,6 @@ describe("schema-faker generate()", () => {
 
       expect(user.email).toBe("test@example.com");
       expect(user.age).toBe(30);
-
-      // שדות אחרים עדיין נוצרים
       expect(user.id).toBeDefined();
       expect(typeof user.isActive).toBe("boolean");
     });
@@ -88,8 +86,6 @@ describe("schema-faker generate()", () => {
       });
 
       expect(result.profile.city).toBe("Tel Aviv");
-
-      // שדות אחרים נשארים גנריים
       expect(result.profile.score).toBeGreaterThanOrEqual(0);
       expect(result.profile.score).toBeLessThanOrEqual(100);
     });
@@ -143,11 +139,8 @@ describe("schema-faker generate()", () => {
         overrides: { age: 40 },
       });
 
-      // override זהה
       expect(a.age).toBe(40);
       expect(b.age).toBe(40);
-
-      // שדות אחרים שונים
       expect(a.id).not.toEqual(b.id);
     });
   });
