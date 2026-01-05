@@ -7,6 +7,7 @@ import { deepMerge } from "./core/deepMerge";
 export function generate(schema: any, options: GenerateOptions = {}) {
   const ctx: Context = {
     random: new Random(options.seed),
+    strict: options.strict || false,
   };
 
   // Function to generate a single value

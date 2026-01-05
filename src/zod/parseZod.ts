@@ -60,6 +60,12 @@ export function parseZodSchema(schema: any, ctx: Context): any {
     case "ZodDate": // Date type
       return generateDate(schema, ctx);
     default:
-      return null;
+      if (ctx.strict) {
+        throw new Error(
+          `Unsupported Zod type: ${schema._def.typeName}`
+        );
+      }
+
+      return undefined;
   }
 }

@@ -264,6 +264,28 @@ describe("schema-faker generate()", () => {
     });
   });
 
+  describe("strict mode", () => {
+    it("throws on unsupported schema in strict mode", () => {
+      const Schema = z.intersection(
+        z.object({ a: z.string() }),
+        z.object({ b: z.number() })
+      );
+
+      expect(() => generate(Schema, { strict: true })).toThrow(
+        /Unsupported Zod type/
+      );
+    });
+
+    it("does not throw when strict mode is off", () => {
+      const Schema = z.intersection(
+        z.object({ a: z.string() }),
+        z.object({ b: z.number() })
+      );
+
+      expect(() => generate(Schema)).not.toThrow();
+    });
+  });
+
   describe("optional support", () => {
     it("can return undefined or value with different seeds", () => {
       const Schema = z.string().optional();
