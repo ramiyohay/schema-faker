@@ -1,6 +1,6 @@
 {
   "name": "@ramiyohay/schema-faker",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Generate fake data from Zod schemas in a deterministic way",
   "license": "MIT",
   "main": "dist/index.js",
