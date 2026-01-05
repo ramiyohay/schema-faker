@@ -46,6 +46,112 @@ describe("schema-faker generate()", () => {
     });
   });
 
+  describe("overrides", () => {
+    it("overrides top-level fields", () => {
+      const UserSchema = z.object({
+        id: z.string().uuid(),
+        email: z.string().email(),
+        age: z.number().min(18).max(65),
+        isActive: z.boolean(),
+      });
+
+      const user = generate(UserSchema, {
+        overrides: {
+          email: "test@example.com",
+          age: 30,
+        },
+      });
+
+      expect(user.email).toBe("test@example.com");
+      expect(user.age).toBe(30);
+
+      // שדות אחרים עדיין נוצרים
+      expect(user.id).toBeDefined();
+      expect(typeof user.isActive).toBe("boolean");
+    });
+
+    it("overrides nested fields", () => {
+      const Schema = z.object({
+        id: z.string().uuid(),
+        profile: z.object({
+          city: z.string(),
+          score: z.number().min(0).max(100),
+        }),
+      });
+
+      const result = generate(Schema, {
+        overrides: {
+          profile: {
+            city: "Tel Aviv",
+          },
+        },
+      });
+
+      expect(result.profile.city).toBe("Tel Aviv");
+
+      // שדות אחרים נשארים גנריים
+      expect(result.profile.score).toBeGreaterThanOrEqual(0);
+      expect(result.profile.score).toBeLessThanOrEqual(100);
+    });
+
+    it("overrides work with arrays", () => {
+      const Schema = z.object({
+        tags: z.array(z.string()),
+      });
+
+      const result = generate(Schema, {
+        overrides: {
+          tags: ["fixed", "tags"],
+        },
+      });
+
+      expect(result.tags).toEqual(["fixed", "tags"]);
+    });
+
+    it("overrides are deterministic with seed", () => {
+      const Schema = z.object({
+        id: z.string().uuid(),
+        age: z.number(),
+      });
+
+      const a = generate(Schema, {
+        seed: 1,
+        overrides: { age: 40 },
+      });
+
+      const b = generate(Schema, {
+        seed: 1,
+        overrides: { age: 40 },
+      });
+
+      expect(a).toEqual(b);
+    });
+
+    it("override does not affect non-overridden fields randomness", () => {
+      const Schema = z.object({
+        id: z.string().uuid(),
+        age: z.number(),
+      });
+
+      const a = generate(Schema, {
+        seed: 1,
+        overrides: { age: 40 },
+      });
+
+      const b = generate(Schema, {
+        seed: 2,
+        overrides: { age: 40 },
+      });
+
+      // override זהה
+      expect(a.age).toBe(40);
+      expect(b.age).toBe(40);
+
+      // שדות אחרים שונים
+      expect(a.id).not.toEqual(b.id);
+    });
+  });
+
   describe("array support", () => {
     it("generates array within min/max length", () => {
       const Schema = z.array(z.number()).min(3).max(5);

@@ -19,24 +19,24 @@ Most fake data libraries generate random values field-by-field.
 - ✅ Perfect for tests, seeds, and mock APIs
 
 ### Type Support
-✅ string
-✅ number
-✅ boolean
-✅ object
-✅ array
-✅ optional
-✅ enum
-✅ nullable
-✅ tuple
-✅ union
-✅ literal
-✅ date
+- ✅ string
+- ✅ number
+- ✅ boolean
+- ✅ object
+- ✅ array
+- ✅ optional
+- ✅ enum
+- ✅ nullable
+- ✅ tuple
+- ✅ union
+- ✅ literal
+- ✅ date
 
 
 ## Install
 npm install schema-faker zod
 
-## Usage
+## Basic Usage
 ```ts
 import { z } from "zod";
 import { generate } from "schema-faker";
@@ -55,6 +55,27 @@ const users = generate(User, {
   count: 5,
   seed: 42,
 });
+```
 
-console.log(users);
+# Override Data Usage
+```ts
+import { z } from "zod";
+import { generate } from "schema-faker";
+
+const UserSchema = z.object({
+  id: z.string().uuid(),
+  email: z.string().email(),
+  age: z.number().min(18).max(65),
+  isActive: z.boolean(),
+});
+
+// email and age will stay the same
+const user = generate(UserSchema, {
+  overrides: {
+    email: "test@example.com",
+    age: 30,
+  },
+});
+
+console.log(user);
 ```
