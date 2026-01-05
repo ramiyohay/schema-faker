@@ -31,6 +31,7 @@ Most fake data libraries generate random values field-by-field.
 - ✅ union
 - ✅ literal
 - ✅ date
+- ✅ record
 
 
 ## Install

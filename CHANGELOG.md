@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.5.0] - 2026-01-05
+### Added
+- `record` option to generate data for Zod record
+
 ## [0.4.0] - 2026-01-05
 ### Added
 - `count` option to generate multiple items
