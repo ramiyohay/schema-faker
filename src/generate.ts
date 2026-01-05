@@ -9,13 +9,16 @@ export function generate(schema: any, options: GenerateOptions = {}) {
     random: new Random(options.seed),
   };
 
-  // create data based on schema
-  const generated = parseZodSchema(schema, ctx);
+  // Function to generate a single value
+  const makeOne = () => {
+    const value = parseZodSchema(schema, ctx);
+    return options.overrides ? deepMerge(value, options.overrides) : value;
+  };
 
-  // apply overrides if provided
-  if (options.overrides) {
-    return deepMerge(generated, options.overrides);
+  // Handle count option
+  if (options.count && options.count > 1) {
+    return Array.from({ length: options.count }, makeOne);
   }
 
-  return generated;
+  return makeOne();
 }

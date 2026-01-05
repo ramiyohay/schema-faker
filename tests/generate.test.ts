@@ -173,6 +173,83 @@ describe("schema-faker generate()", () => {
     });
   });
 
+  describe("generate() – count option", () => {
+    it("returns a single item when count is not provided", () => {
+      const Schema = z.object({
+        id: z.string(),
+      });
+
+      const result = generate(Schema);
+
+      expect(Array.isArray(result)).toBe(false);
+      expect(result).toHaveProperty("id");
+    });
+
+    it("returns an array when count > 1", () => {
+      const Schema = z.object({
+        id: z.string(),
+      });
+
+      const result = generate(Schema, { count: 3 });
+
+      expect(Array.isArray(result)).toBe(true);
+      expect(result).toHaveLength(3);
+    });
+
+    it("each generated item matches the schema", () => {
+      const Schema = z.object({
+        id: z.string().uuid(),
+        age: z.number(),
+      });
+
+      const result = generate(Schema, { count: 5 });
+
+      for (const item of result as any[]) {
+        expect(() => Schema.parse(item)).not.toThrow();
+      }
+    });
+
+    it("is deterministic with the same seed", () => {
+      const Schema = z.object({
+        id: z.string(),
+        value: z.number(),
+      });
+
+      const a = generate(Schema, { count: 3, seed: 123 });
+      const b = generate(Schema, { count: 3, seed: 123 });
+
+      expect(a).toEqual(b);
+    });
+
+    it("produces different results with different seeds", () => {
+      const Schema = z.object({
+        id: z.string(),
+        value: z.number(),
+      });
+
+      const a = generate(Schema, { count: 3, seed: 1 });
+      const b = generate(Schema, { count: 3, seed: 2 });
+
+      expect(a).not.toEqual(b);
+    });
+
+    it("applies overrides to all generated items", () => {
+      const Schema = z.object({
+        id: z.string(),
+        isActive: z.boolean(),
+      });
+
+      const result = generate(Schema, {
+        count: 4,
+        overrides: { isActive: true },
+      });
+
+      for (const item of result as any[]) {
+        expect(item.isActive).toBe(true);
+      }
+    });
+  });
+
   describe("optional support", () => {
     it("can return undefined or value with different seeds", () => {
       const Schema = z.string().optional();
