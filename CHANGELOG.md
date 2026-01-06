@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.6.0] - 2026-01-05
+### Added
+- strict support
+
 ## [0.5.0] - 2026-01-05
 ### Added
 - `record` option to generate data for Zod record
