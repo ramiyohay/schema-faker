@@ -1,8 +1,12 @@
 # schema-faker
 
+https://www.npmjs.com/package/@ramiyohay/schema-faker
+
 Generate fake data from **Zod schemas** in a deterministic, type-safe, and extensible way.
 
 `schema-faker` creates realistic-looking mock data **directly from your existing schemas**, without writing manual mocks.
+
+Questions or issues? Open an issue on GitHub – happy to help.
 
 ---
 
